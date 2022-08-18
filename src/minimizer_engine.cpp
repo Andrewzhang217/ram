@@ -531,8 +531,9 @@ std::vector<MinimizerEngine::Kmer> MinimizerEngine::Minimize(
   std::string sequence_name = sequence->name;
   std::string file_name = sequence_name + ".csv";
   std::ofstream MinimizerFile(file_name);
+  MinimizerFile << sequence->inflated_len << ",";
   for (auto minimizer : dst) {
-      MinimizerFile << minimizer.position();
+      MinimizerFile << minimizer.position() << ",";
   }
   MinimizerFile.close();
   return dst;
