@@ -3,6 +3,8 @@
 #include "ram/minimizer_engine.hpp"
 
 #include <deque>
+#include <fstream>
+#include <iostream>
 #include <stdexcept>
 
 namespace ram {
@@ -526,7 +528,13 @@ std::vector<MinimizerEngine::Kmer> MinimizerEngine::Minimize(
     dst.resize(sequence->inflated_len / k_);
     RadixSort(dst.begin(), dst.end(), 64, Kmer::SortByOrigin);
   }
-
+  std::string sequence_name = sequence->name;
+  std::string file_name = sequence_name + ".csv";
+  std::ofstream MinimizerFile(file_name);
+  for (auto minimizer : dst) {
+      MinimizerFile << minimizer.position();
+  }
+  MinimizerFile.close();
   return dst;
 }
 
